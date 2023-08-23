@@ -7,8 +7,7 @@ Avery Oremland, Matthew Sorensen, Corbyn Becker, Will Bond, Nash ale -- Update L
 Create the fastest robot.
 
 ## Features -- Maybe.
-Slim, Four wheeled robot
-
+Slim, Four wheeled robot \n
 Transmission
 
 Update this!!
