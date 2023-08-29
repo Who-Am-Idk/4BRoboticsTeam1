@@ -1,7 +1,7 @@
 # 4BRoboticsTeam1
 
 ## Members:
-Avery Oremland, Matthew Sorensen, Corbyn Becker, Will Bond, Nash Hale -- Update List!!
+Avery Oremland, Matthew Sorensen, Corbyn Becker, Will Bond, Nash Hale
 
 ## Diagram
 ![Diagram](https://github.com/Who-Am-Idk/4BRoboticsTeam1/blob/main/images/diagram.jpg?raw=true)
