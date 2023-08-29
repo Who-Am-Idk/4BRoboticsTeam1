@@ -7,11 +7,9 @@ Avery Oremland, Matthew Sorensen, Corbyn Becker, Will Bond, Nash Hale
 ![Diagram](https://github.com/Who-Am-Idk/4BRoboticsTeam1/blob/main/images/diagram.jpg?raw=true)
 
 ## Objective:
-Create the fastest robot.
+Create the fastest robot in this class.
 
-## Features -- Maybe.
-Slim, Four wheeled robot
+## Build
+Slim, long rectangular build using gear ratios & a two gear transmission.
 
-Transmission
-
-Update this!!
+We will use a two gear transmission, first gear for torque and acceleration, second gear for maximum speed.
