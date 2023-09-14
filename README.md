@@ -16,6 +16,9 @@ Slim, long rectangular build using gear ratios & a two gear transmission.
 
 We will use a two gear transmission, first gear for torque and acceleration, second gear for maximum speed.
 
+* 3-4 Motors
+* ~15 Axels
+
 ## Chasis
 
 ![Bot1](https://github.com/Who-Am-Idk/4BRoboticsTeam1/blob/main/images/bot1.jpg?raw=true)
