@@ -7,6 +7,7 @@ Avery Oremland, Matthew Sorensen, Corbyn Becker, Will Bond, Nash Hale, Ben Goets
 
 ## Diagram
 ![Diagram](https://github.com/Who-Am-Idk/4BRoboticsTeam1/blob/main/images/diagram.jpg?raw=true)
+![Scoop](https://github.com/Who-Am-Idk/4BRoboticsTeam1/blob/main/images/Team%201%20Robot%20Scoop%204B.jpg?raw=true)
 
 ## Objective:
 Create the fastest robot in this class.
