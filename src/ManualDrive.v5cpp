@@ -30,11 +30,13 @@ brain Brain;
 motor Shifter = motor(PORT1, ratio18_1, false);
 
 controller Controller1 = controller(primary);
-motor Drive = motor(PORT2, ratio18_1, false);
-
 motor SteerMotor = motor(PORT4, ratio18_1, false);
 
-motor Drive2 = motor(PORT3, ratio18_1, true);
+motor DriveMotorA = motor(PORT2, ratio18_1, false);
+motor DriveMotorB = motor(PORT3, ratio18_1, true);
+motor_group Drive = motor_group(DriveMotorA, DriveMotorB);
+
+motor Lift = motor(PORT5, ratio18_1, false);
 
 
 // define variable for remote controller enable/disable
@@ -44,7 +46,6 @@ bool RemoteControlCodeEnabled = true;
 
 
 #pragma endregion VEXcode Generated Robot Configuration
-
 /*----------------------------------------------------------------------------*/
 /*                                                                            */
 /*    Module:       ManualDrive.cpp                                           */
@@ -54,53 +55,72 @@ bool RemoteControlCodeEnabled = true;
 /*                                                                            */
 /*----------------------------------------------------------------------------*/
 
-// Include the V5 Library
 #include "vex.h"
   
-// Allows for easier use of the VEX Library
 using namespace vex;
 
- char gear[] = {'1'};
- //gear[0] = loadfile("ManualDrive.bin", (uint8_t*)gear, sizeof(gear));
-
+ int gear[] = {1}; //Robot must be started in first gear... Need to come up with file manipulation/sensing.
 
 void onevent_Controller1Axis1Changed_0(){
-  //When right stick
+  //When right stick is moved (Left & Right Steering)
   SteerMotor.setVelocity(600,rpm);
-  SteerMotor.spinToPosition(-2.5*Controller1.Axis1.position(), degrees, false);
+  //Don't know if multiplying it by -2.5 does anything, but it works, so not changing it.
+  SteerMotor.spinToPosition(-3.25*Controller1.Axis1.position(), degrees, false);
 }
 
 void whenStarted1(){
-  Controller1.Screen.print("Gear %c", gear);
+  
+  Controller1.Screen.print("Gear %d", gear[0]);
+  Shifter.setStopping(hold);
   while (true){
+    //Axis 3 is the accelerator basically.
     //Using Left stick (Up & Down) for how much the stick is pushed.
     Drive.setVelocity(-Controller1.Axis3.position(), percent);
-    Drive2.setVelocity(-Controller1.Axis3.position(), percent);
     //ACTUALLY spinning the motor.
     Drive.spin(forward);
-    Drive2.spin(forward);
     //Up shift (R1)
-    if(Controller1.ButtonR1.pressing() && gear[0] != '2'){
-      Controller1.Screen.clearLine(3);
-      Shifter.spinFor(reverse, 60.0, degrees, false);
-      gear[0] = '2';
-      Controller1.Screen.print("Gear %c", gear[0]);
+    //Check if the bot is not gonna over shift and grind.
+    if(Controller1.ButtonR1.pressing() && gear[0] != 4){
+      gear[0] += 1;
+      Shifter.spinFor(reverse, 90.0, degrees, false);
+      Controller1.rumble(rumbleShort);
     }
     //Down shift (R2)
-    if(Controller1.ButtonR2.pressing() && gear[0] != '1'){
-      Controller1.Screen.clearLine(3);                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                    
+    //Check if the bot is not gonna over shift and grind.
+    if(Controller1.ButtonR2.pressing() && gear[0] != 1){
+      gear[0] -=1;                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                    
       Shifter.spinFor(forward, 60.0, degrees, false);
-      gear[0] = '1';
-      Controller1.Screen.print("Gear %c", gear[0]);
+      Controller1.rumble("----");
     }
+    if(Controller1.ButtonL1.pressing()){
+      Lift.spinFor(forward, 120, degrees, false);
+    }
+    if(Controller1.ButtonL2.pressing()){
+      Lift.spinFor(reverse,120,degrees,false);
+    }
+    //Print the current gear onto the controller screen. 
+    Controller1.Screen.clearLine(3);
+    Controller1.Screen.print("Gear %d", gear[0]);
   }
 }
 
 
 int main() {
+  Controller1.Screen.setCursor(3,1);
+  int stupid = 0;
+
+  while(!Controller1.ButtonA.pressing()){
+  Controller1.Screen.clearLine(3);
+  Controller1.Screen.print("What gear? %d", stupid);
+  if(Controller1.ButtonUp.pressing()){
+    stupid+=1;
+  } else if (Controller1.ButtonDown.pressing()){
+    stupid-=1;
+  }
+  gear[0] = stupid;
+  } 
     Controller1.Axis1.changed(onevent_Controller1Axis1Changed_0);
     whenStarted1();
-    //Brain.SDcard.savefile("ManualDrive.bin", (uint8_t *)gear, sizeof(gear));
 
 }
 
