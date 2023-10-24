@@ -83,24 +83,28 @@ void whenStarted1(){
     if(Controller1.ButtonR1.pressing() && gear[0] != 4){
       gear[0] += 1;
       Shifter.spinFor(reverse, 90.0, degrees, false);
-      Controller1.rumble(rumbleShort);
+      Controller1.rumble("..");
+      Controller1.Screen.clearLine(3);
+      Controller1.Screen.print("Gear %d", gear[0]);
     }
     //Down shift (R2)
     //Check if the bot is not gonna over shift and grind.
     if(Controller1.ButtonR2.pressing() && gear[0] != 1){
       gear[0] -=1;                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                    
       Shifter.spinFor(forward, 60.0, degrees, false);
-      Controller1.rumble("----");
+      Controller1.rumble("--");
+      Controller1.Screen.clearLine(3);
+      Controller1.Screen.print("Gear %d", gear[0]);
     }
     if(Controller1.ButtonL1.pressing()){
       Lift.spinFor(forward, 120, degrees, false);
+      Controller1.Screen.print(" Plow Up!");
     }
     if(Controller1.ButtonL2.pressing()){
       Lift.spinFor(reverse,120,degrees,false);
+      Controller1.Screen.print(" Plow Down!");
     }
     //Print the current gear onto the controller screen. 
-    Controller1.Screen.clearLine(3);
-    Controller1.Screen.print("Gear %d", gear[0]);
   }
 }
 
@@ -118,6 +122,7 @@ int main() {
     stupid-=1;
   }
   gear[0] = stupid;
+  wait(.5, seconds)
   } 
     Controller1.Axis1.changed(onevent_Controller1Axis1Changed_0);
     whenStarted1();
