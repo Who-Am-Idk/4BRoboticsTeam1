@@ -50,7 +50,7 @@ bool RemoteControlCodeEnabled = true;
 /*                                                                            */
 /*    Module:       ManualDrive.cpp                                           */
 /*    Author:       {Matt.S}                                                  */
-/*    Created:      {date}                                                    */
+/*    Created:      Oct 24                                                    */
 /*    Description:  V5 project                                                */
 /*                                                                            */
 /*----------------------------------------------------------------------------*/
@@ -59,17 +59,22 @@ bool RemoteControlCodeEnabled = true;
   
 using namespace vex;
 
- int gear[] = {1}; //Robot must be started in first gear... Need to come up with file manipulation/sensing.
+  int gear[] = {1}; //Robot must be started in first gear... Need to come up with file manipulation/sensing.
 
-void onevent_Controller1Axis1Changed_0(){
+ void onevent_Controller1Axis1Changed_0(){
   //When right stick is moved (Left & Right Steering)
   SteerMotor.setVelocity(600,rpm);
   //Don't know if multiplying it by -2.5 does anything, but it works, so not changing it.
   SteerMotor.spinToPosition(-3.25*Controller1.Axis1.position(), degrees, false);
+ }
+ void updateDisplay(int gear, bool plow){
+  Controller1.Screen.setCursor(3,1);
+  Controller1.Screen.clearLine(3);
+  Controller1.Screen.print("Gear %d", gear);
+  Controller1.Screen.print(plow ? "Plow Down" : "Plow Up");
 }
-
-void whenStarted1(){
-  
+ void whenStarted1(){
+  bool plow;
   Controller1.Screen.print("Gear %d", gear[0]);
   Shifter.setStopping(hold);
   while (true){
@@ -84,8 +89,7 @@ void whenStarted1(){
       gear[0] += 1;
       Shifter.spinFor(reverse, 90.0, degrees, false);
       Controller1.rumble("..");
-      Controller1.Screen.clearLine(3);
-      Controller1.Screen.print("Gear %d", gear[0]);
+      updateDisplay(gear[0], plow);
     }
     //Down shift (R2)
     //Check if the bot is not gonna over shift and grind.
@@ -93,16 +97,17 @@ void whenStarted1(){
       gear[0] -=1;                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                    
       Shifter.spinFor(forward, 60.0, degrees, false);
       Controller1.rumble("--");
-      Controller1.Screen.clearLine(3);
-      Controller1.Screen.print("Gear %d", gear[0]);
+      updateDisplay(gear[0], plow);
     }
     if(Controller1.ButtonL1.pressing()){
       Lift.spinFor(forward, 120, degrees, false);
-      Controller1.Screen.print(" Plow Up!");
+      plow = false;
+      updateDisplay(gear[0], true);
     }
     if(Controller1.ButtonL2.pressing()){
       Lift.spinFor(reverse,120,degrees,false);
-      Controller1.Screen.print(" Plow Down!");
+      plow = true;
+      updateDisplay(gear[0], true);
     }
     //Print the current gear onto the controller screen. 
   }
@@ -110,19 +115,24 @@ void whenStarted1(){
 
 
 int main() {
-  Controller1.Screen.setCursor(3,1);
   int stupid = 0;
+  Controller1.Screen.setCursor(3,1);
+  Controller1.Screen.clearLine(3);
+  
 
   while(!Controller1.ButtonA.pressing()){
-  Controller1.Screen.clearLine(3);
-  Controller1.Screen.print("What gear? %d", stupid);
+  
   if(Controller1.ButtonUp.pressing()){
     stupid+=1;
+    Controller1.Screen.clearLine(3);
+    Controller1.Screen.print("What gear? %d", stupid);
   } else if (Controller1.ButtonDown.pressing()){
     stupid-=1;
+    Controller1.Screen.clearLine(3);
+    Controller1.Screen.print("What gear? %d", stupid);
   }
   gear[0] = stupid;
-  wait(.5, seconds)
+  wait(.5, seconds);
   } 
     Controller1.Axis1.changed(onevent_Controller1Axis1Changed_0);
     whenStarted1();
