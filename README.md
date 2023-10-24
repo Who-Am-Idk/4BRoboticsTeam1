@@ -19,6 +19,7 @@ We will use a two gear transmission, first gear for torque and acceleration, sec
 
 * 3-4 Motors
 * ~15 Axels
+(outdated, we should update this)
 
 ## Chasis
 
