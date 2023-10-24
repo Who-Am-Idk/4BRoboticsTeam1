@@ -28,6 +28,6 @@ We will use a two gear transmission, first gear for torque and acceleration, sec
 
 ## Chasis
 Naked Steering:
-![Bot1](https://github.com/Who-Am-Idk/4BRoboticsTeam1/blob/main/images/bot1.jpg?raw=true)
+![Bot1](https://github.com/Who-Am-Idk/4BRoboticsTeam1/blob/main/images/bot1.jpg?raw=true)![Bot4](https://github.com/Averociraptor/Robotics_Portfolio/raw/main/images/20231010_125151.jpg)
 Scoop & Full view of current robot design:
-![Bot4](https://github.com/Averociraptor/Robotics_Portfolio/raw/main/images/20231010_125151.jpg)
+
