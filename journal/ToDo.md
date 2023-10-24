@@ -5,7 +5,7 @@
 * 4 Speed Transmission
 * Fix Plow
 * Switch motors out for speed motors, when availiable
-* Update list in [Read Me](ReadMe.md) for building resources
+* Update list in [Read Me](README.md) for building resources
 
 ## Programming:
 
