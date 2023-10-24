@@ -9,9 +9,8 @@ Driver: Will Bond
 (Jobs can be fluid.)
 
 ## Diagram
-Old Sketch:
+Quick sketch & Scoop rough design
 ![Diagram](https://github.com/Who-Am-Idk/4BRoboticsTeam1/blob/main/images/diagram.jpg?raw=true)
-Scoop Sketch Idea:
 ![Scoop](https://github.com/Who-Am-Idk/4BRoboticsTeam1/blob/main/images/Team%201%20Robot%20Scoop%204B.jpg?raw=true)
 
 ## Objective:
@@ -27,6 +26,7 @@ We will use a two gear transmission, first gear for torque and acceleration, sec
 (outdated, we should update this)
 
 ## Chasis
+Naked Steering & Current Design
 ![Naked Steering](https://github.com/Who-Am-Idk/4BRoboticsTeam1/blob/main/images/bot1.jpg?raw=true)
 ![Scoop & Full view of current robot design](https://github.com/Averociraptor/Robotics_Portfolio/raw/main/images/20231010_125151.jpg)
 
