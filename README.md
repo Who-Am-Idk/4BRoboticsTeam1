@@ -16,6 +16,8 @@ Quick sketch & Scoop rough design
 ## Objective:
 Create the fastest robot in this class.
 
+## [To Do](journal/ToDo.md)
+
 ## Build
 Slim, long rectangular build using gear ratios & a two gear transmission.
 
