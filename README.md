@@ -4,8 +4,11 @@ https://youtu.be/obedb8HNvTE?si=tJPA-PQuWnYN3u33
 
 ## Members:
 Builders: Avery Oremland, Ben Goetsch, Corbyn Becker
+
 Programmers: Matthew Sorensen, Nash Hale
+
 Driver: Will Bond
+
 (Jobs can be fluid.)
 
 ## Diagram
