@@ -32,7 +32,7 @@ motor Shifter = motor(PORT1, ratio18_1, false);
 controller Controller1 = controller(primary);
 motor SteerMotor = motor(PORT4, ratio18_1, false);
 
-motor DriveMotorA = motor(PORT2, ratio18_1, false);
+motor DriveMotorA = motor(PORT2, ratio18_1, true);
 motor DriveMotorB = motor(PORT3, ratio18_1, true);
 motor_group Drive = motor_group(DriveMotorA, DriveMotorB);
 
@@ -49,8 +49,7 @@ bool RemoteControlCodeEnabled = true;
 /*----------------------------------------------------------------------------*/
 /*                                                                            */
 /*    Module:       ManualDrive.cpp                                           */
-/*    Author:       {Matt.S}                                                  */
-/*    Created:      Oct 24                                                    */
+/*    Author:       {Matt.S}                                                  */                                            
 /*    Description:  V5 project                                                */
 /*                                                                            */
 /*----------------------------------------------------------------------------*/
@@ -72,6 +71,7 @@ using namespace vex;
   Controller1.Screen.clearLine(3);
   Controller1.Screen.print("Gear %d", gear);
   Controller1.Screen.print(plow ? "Plow Down" : "Plow Up");
+
 }
  void whenStarted1(){
   bool plow;
@@ -80,14 +80,16 @@ using namespace vex;
   while (true){
     //Axis 3 is the accelerator basically.
     //Using Left stick (Up & Down) for how much the stick is pushed.
-    Drive.setVelocity(-Controller1.Axis3.position(), percent);
+    Drive.setVelocity(Controller1.Axis3.position(), percent);
     //ACTUALLY spinning the motor.
     Drive.spin(forward);
     //Up shift (R1)
     //Check if the bot is not gonna over shift and grind.
     if(Controller1.ButtonR1.pressing() && gear[0] != 4){
       gear[0] += 1;
-      Shifter.spinFor(reverse, 90.0, degrees, false);
+      if (gear[0] == 2) {
+        Shifter.spinFor(reverse, 90.0, degrees, false);
+      } else { Shifter.spinFor(reverse, 80, degrees, false);}
       Controller1.rumble("..");
       updateDisplay(gear[0], plow);
     }
@@ -95,7 +97,11 @@ using namespace vex;
     //Check if the bot is not gonna over shift and grind.
     if(Controller1.ButtonR2.pressing() && gear[0] != 1){
       gear[0] -=1;                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                    
-      Shifter.spinFor(forward, 60.0, degrees, false);
+      if (gear[0] == 3) {
+        Shifter.spinFor(forward, 90.0, degrees, false);
+      } else {
+        Shifter.spinFor(forward, 80, degrees, false);
+      }
       Controller1.rumble("--");
       updateDisplay(gear[0], plow);
     }
@@ -122,14 +128,14 @@ int main() {
 
   while(!Controller1.ButtonA.pressing()){
   
-  if(Controller1.ButtonUp.pressing()){
-    stupid+=1;
-    Controller1.Screen.clearLine(3);
-    Controller1.Screen.print("What gear? %d", stupid);
-  } else if (Controller1.ButtonDown.pressing()){
-    stupid-=1;
-    Controller1.Screen.clearLine(3);
-    Controller1.Screen.print("What gear? %d", stupid);
+   if(Controller1.ButtonUp.pressing()){
+     stupid+=1;
+     Controller1.Screen.clearLine(3);
+     Controller1.Screen.print("What gear? %d", stupid);
+   } else if (Controller1.ButtonDown.pressing()){
+     stupid-=1;
+     Controller1.Screen.clearLine(3);
+     Controller1.Screen.print("What gear? %d", stupid);
   }
   gear[0] = stupid;
   wait(.5, seconds);
