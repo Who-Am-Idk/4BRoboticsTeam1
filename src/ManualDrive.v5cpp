@@ -77,7 +77,9 @@ using namespace vex;
   bool plow;
   Controller1.Screen.print("Gear %d", gear[0]);
   Shifter.setStopping(hold);
+  Brain.Screen.clearLine(0);
   while (true){
+
     //Axis 3 is the accelerator basically.
     //Using Left stick (Up & Down) for how much the stick is pushed.
     Drive.setVelocity(Controller1.Axis3.position(), percent);
@@ -86,22 +88,35 @@ using namespace vex;
     //Up shift (R1)
     //Check if the bot is not gonna over shift and grind.
     if(Controller1.ButtonR1.pressing() && gear[0] != 4){
+      Brain.Timer.clear();
+      while(Controller1.ButtonR1.pressing()){
+        Shifter.spin(reverse);
+      }
+      Shifter.stop();
+      Brain.Screen.print(Brain.Timer.time(seconds));
       gear[0] += 1;
-      if (gear[0] == 2) {
-        Shifter.spinFor(reverse, 90.0, degrees, false);
-      } else { Shifter.spinFor(reverse, 80, degrees, false);}
+      //if (gear[0] == 2) {
+        //Shifter.spinFor(reverse, 90.0, degrees, false);
+      //} else { Shifter.spinFor(reverse, 80, degrees, false);}
       Controller1.rumble("..");
       updateDisplay(gear[0], plow);
     }
+    
     //Down shift (R2)
     //Check if the bot is not gonna over shift and grind.
     if(Controller1.ButtonR2.pressing() && gear[0] != 1){
-      gear[0] -=1;                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                    
-      if (gear[0] == 3) {
-        Shifter.spinFor(forward, 90.0, degrees, false);
-      } else {
-        Shifter.spinFor(forward, 80, degrees, false);
+      Brain.Timer.clear();
+      while(Controller1.ButtonR2.pressing()){
+        Shifter.spin(forward);
       }
+      Shifter.stop();
+      Brain.Screen.print(Brain.Timer.time(seconds));
+      gear[0] -=1;                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                    
+      // if (gear[0] == 3) {
+      //   Shifter.spinFor(forward, 90.0, degrees, false);
+      // } else {
+      //   Shifter.spinFor(forward, 80, degrees, false);
+      // }
       Controller1.rumble("--");
       updateDisplay(gear[0], plow);
     }
@@ -121,21 +136,23 @@ using namespace vex;
 
 
 int main() {
-  int stupid = 0;
+  Shifter.setVelocity(20,rpm);
+  int stupid = 0; int evenStupider = 0;
   Controller1.Screen.setCursor(3,1);
   Controller1.Screen.clearLine(3);
-  
-
+  Controller1.Screen.print("What gear? 0");
   while(!Controller1.ButtonA.pressing()){
-  
+  evenStupider = stupid;
    if(Controller1.ButtonUp.pressing()){
      stupid+=1;
-     Controller1.Screen.clearLine(3);
-     Controller1.Screen.print("What gear? %d", stupid);
    } else if (Controller1.ButtonDown.pressing()){
      stupid-=1;
+   }
+
+   if(evenStupider != stupid){
      Controller1.Screen.clearLine(3);
      Controller1.Screen.print("What gear? %d", stupid);
+   
   }
   gear[0] = stupid;
   wait(.5, seconds);
